@@ -4,7 +4,6 @@ const postController = Router()
 
 import * as postServices from './Services/post.service.js'
 
-// validation error handler
 const validate = (req, res, next) => {
   const errors = validationResult(req)
   if (!errors.isEmpty()) {

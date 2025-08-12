@@ -13,7 +13,7 @@ export const createBulk = async (req, res) => {
         message: "comments data needed for bulk creating",
       })
 
-    // validations done in model validations already
+    
 
     const created = await Comment.bulkCreate(comments, { validate: true })
 

@@ -2,9 +2,8 @@ import { Router } from "express";
 import { body, param, query, validationResult } from "express-validator";
 const commentController = Router()
 
-import * as commentsSerices from './Services/comment.service.js'
+import * as commentsServices from './Services/comment.service.js'
 
-// validation error handler
 const validate = (req, res, next) => {
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
@@ -22,7 +21,7 @@ commentController.post(
     body('comments.*.fkUserId').isInt()
   ],
   validate,
-  commentsSerices.createBulk
+  commentsServices.createBulk
 )
 
 commentController.patch(
@@ -33,7 +32,7 @@ commentController.patch(
     body('updateContent').isString().trim().isLength({ min: 1 })
   ],
   validate,
-  commentsSerices.updateComment
+  commentsServices.updateComment
 )
 
 commentController.post(
@@ -44,28 +43,28 @@ commentController.post(
     body('content').isString().trim().isLength({ min: 1 })
   ],
   validate,
-  commentsSerices.findOrCreate
+  commentsServices.findOrCreate
 )
 
 commentController.get(
   '/search',
   [ query('word').isString().trim().isLength({ min: 1 }) ],
   validate,
-  commentsSerices.searchInContent
+  commentsServices.searchInContent
 )
 
 commentController.get(
   '/newest/:postId',
   [ param('postId').isInt() ],
   validate,
-  commentsSerices.getMostRecent
+  commentsServices.getMostRecent
 )
 
 commentController.get(
   '/details/:commentId',
   [ param('commentId').isInt() ],
   validate,
-  commentsSerices.findCommentDetails
+  commentsServices.findCommentDetails
 )
 
 

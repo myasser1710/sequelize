@@ -6,6 +6,8 @@
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
+    "migrate": "npx sequelize-cli db:migrate --config src/DB/config/config.json --migrations-path src/DB/migrations",
+    "seed": "npx sequelize-cli db:seed:all --config src/DB/config/config.json --seeders-path src/DB/seeders"
   },
   "keywords": [],
   "author": "",

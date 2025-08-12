@@ -4,7 +4,6 @@ const userController = Router()
 
 import * as userServices from './Services/user.service.js'
 
-// validation error handler
 const validate = (req, res, next) => {
   const errors = validationResult(req)
   if (!errors.isEmpty()) {

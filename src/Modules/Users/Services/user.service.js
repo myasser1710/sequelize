@@ -1,4 +1,5 @@
 import { User } from "../../../DB/Models/user.model.js";
+import bcrypt from "bcrypt";
 
 export const createUser = async (req, res) => {
   try {
@@ -13,7 +14,8 @@ export const createUser = async (req, res) => {
       });
     }
 
-    const user = User.build({ name, email, password, role });
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const user = User.build({ name, email, password: hashedPassword, role });
 
     await user.save();
 
@@ -53,11 +55,15 @@ export const createOrUpdate = async (req, res) => {
       )
     );
 
+    if (filteredData.password) {
+      filteredData.password = await bcrypt.hash(filteredData.password, 10);
+    }
+
     const [instance, created] = await User.upsert(
       { id: userId, ...filteredData },
       {
         conflictFields: ["id"],
-        validate: false,
+        validate: true,
         returning: true,
       }
     );
@@ -95,8 +101,6 @@ export const createOrUpdate = async (req, res) => {
     });
   }
 };
-
-// handle lw mafesh query param etba3at
 
 export const findByEmail = async (req, res) => {
   try {

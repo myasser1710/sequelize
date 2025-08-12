@@ -90,7 +90,6 @@ export const deletePost = async (req,res)=>{
                         message: "post not found", 
                     })
 
-        // enforce ownership
         if (Number(post.fkUserId) !== Number(userId)) {
             return res.status(403).json({
                 success: false,
@@ -98,13 +97,12 @@ export const deletePost = async (req,res)=>{
             })
         }
 
-        const action = await post.destroy()
+        await post.destroy()
 
-        // use 200 and include body (avoid 204 with body)
         return res.status(200).json({
             success: true,
             message: 'post deleted successfully',
-            deleted_records: action
+            data: { id: post.id }
         })
 
     } catch (error) {

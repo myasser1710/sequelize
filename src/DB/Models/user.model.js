@@ -6,7 +6,6 @@ import bcrypt from 'bcrypt'
 
 
 export const User = sequelize_config.define('User',
-    
     {
         name:{
             type:DataTypes.STRING,
@@ -16,8 +15,7 @@ export const User = sequelize_config.define('User',
                     args:[3,255],
                     msg:'Name must be at least 3 characters'
                 }
-            } //thats better than the custom validation hook and already used hooks in hashing password 
-
+            }
         },
 
         email:{
@@ -61,12 +59,12 @@ export const User = sequelize_config.define('User',
 
             beforeCreate: async (user) => {
                 if (user.password) {
-                    const salt = await bcrypt.genSalt(10); // Generate a random "salt"
-                    user.password = await bcrypt.hash(user.password, salt); // Hash password + salt
+                    const salt = await bcrypt.genSalt(10);
+                    user.password = await bcrypt.hash(user.password, salt);
                 }
             },
             beforeUpdate: async (user) => {
-                if (user.changed('password')) { // Only re-hash if password was modified
+                if (user.changed('password')) {
                     const salt = await bcrypt.genSalt(10);
                     user.password = await bcrypt.hash(user.password, salt);
                 }
@@ -75,15 +73,6 @@ export const User = sequelize_config.define('User',
 
     }
 )
-
-
-
-
-// checking for password after hashed 
-
-// const isMatch = await bcrypt.compare(plainTextPassword, hashedPasswordFromDB);
-// if (isMatch) { /* Allow login */ }
-
 
 
 

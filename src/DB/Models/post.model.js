@@ -49,27 +49,6 @@ Post.init(
 
 
 
-// Post.belongsTo(User,{
-//     foreignKey:{
-//         name:'fkUserId',
-//         allowNull:false
-//     },
-//     constraints:true,
-//     onDelete:'cascade',
-//     onUpdate:'cascade',
-//     as:'post_author_data'
-// })
-
-
-// User.hasMany(Post,{
-//     foreignKey:{
-//         name:'fkUserId'
-//     },
-//     as:'post_data',
-// })
-
-
-
 Post.belongsTo(User, {
   foreignKey: {
     name: 'fkUserId',
