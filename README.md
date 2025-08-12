@@ -94,7 +94,7 @@ npx sequelize-cli db:migrate \
 Start the server:
 ```
 npm start
-# or if you prefer a dev watcher (if configured):
+or if you prefer a dev watcher (if configured):
 npm run dev
 ```
 
