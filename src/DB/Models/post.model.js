@@ -10,7 +10,7 @@ Post.init(
     {
         title:{
             type:DataTypes.STRING,
-            allownull:false
+            allowNull:false
         },
         content:{
             type:DataTypes.TEXT

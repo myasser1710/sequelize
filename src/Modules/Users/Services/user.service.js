@@ -72,7 +72,7 @@ export const createOrUpdate = async (req, res) => {
   } catch (error) {
     console.error("Error in createOrUpdate proccess:", error);
 
-    if (error.parent.errno == 1364) {
+    if (error?.parent?.errno == 1364) {
       return res.status(400).json({
         success: false,
         message: "all user attributes needed",
@@ -157,7 +157,6 @@ export const findByPk = async (req, res) => {
         success: false,
         message: "User was not found ",
         data: "none",
-        dpjadajdjasjdlas: "dpasiijdoasidiojaiodjasiodoaisjd",
       });
     }
 

@@ -62,7 +62,7 @@ export const updateComment = async (req, res) => {
       })
     }
 
-    if (isNaN(userId) || !typeof updateContent === "string")
+    if (isNaN(userId) || typeof updateContent !== "string")
       return res.status(400).json({
         success: false,
         message: "comment id or author id or content data type is not valid",
@@ -107,7 +107,7 @@ export const findOrCreate = async (req, res) => {
   try {
     const { postId, userId, content } = req.body
 
-    if ((!postId, !userId, !content)) {
+    if (!postId || !userId || !content) {
       return res.status(400).json({
         success: false,
         message:
@@ -115,7 +115,7 @@ export const findOrCreate = async (req, res) => {
       })
     }
 
-    if (isNaN(postId) || isNaN(userId) || !typeof content === "string")
+    if (isNaN(postId) || isNaN(userId) || typeof content !== "string")
       return res.status(400).json({
         success: false,
         message: "request data types are not valid",

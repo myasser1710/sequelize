@@ -30,7 +30,7 @@ export const createPost = async (req,res)=>{
 
     } catch (error) {
 
-        if (error.parent.errno == 1452) {
+        if (error?.name === 'SequelizeForeignKeyConstraintError' || error?.parent?.errno == 1452) {
             return res.status(400).json({
                 success: false,
                 message: "author of post was not found between users",
@@ -90,10 +90,18 @@ export const deletePost = async (req,res)=>{
                         message: "post not found", 
                     })
 
-        const action =await post.destroy()
+        // enforce ownership
+        if (Number(post.fkUserId) !== Number(userId)) {
+            return res.status(403).json({
+                success: false,
+                message: 'forbidden: user not authorized to delete this post'
+            })
+        }
 
+        const action = await post.destroy()
 
-        return res.status(204).json({
+        // use 200 and include body (avoid 204 with body)
+        return res.status(200).json({
             success: true,
             message: 'post deleted successfully',
             deleted_records: action
@@ -124,9 +132,10 @@ export const getAllPosts = async (req,res)=>{
 
             include:[
                 { model : User , as:'post_author_data' ,attributes:['id','name']},
-                { model : Comment , as:'post_comments_data' ,attributes:['id','content'],order:[['createdAt','DESC']]}
-            ]}
-        )
+                { model : Comment , as:'post_comments_data' ,attributes:['id','content']}
+            ],
+            order: [[{ model: Comment, as: 'post_comments_data' }, 'createdAt', 'DESC']]
+        })
 
         if (!postData) return res.status(500).json({
                         success: false,

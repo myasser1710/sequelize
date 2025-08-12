@@ -3,10 +3,17 @@ import {Sequelize} from "sequelize"
 
 
 
-export const sequelize_config = new Sequelize('Assignment_six','root','1234',{
-    host:'localhost',
-    dialect:'mysql',
-    logging:(log)=>console.log('sequelize : ',log)
+const DB_NAME = process.env.DB_NAME || 'assignment_six'
+const DB_USER = process.env.DB_USER || 'root'
+const DB_PASS = process.env.DB_PASS || '1234'
+const DB_HOST = process.env.DB_HOST || 'localhost'
+const DB_DIALECT = process.env.DB_DIALECT || 'mysql'
+const DB_LOGGING = process.env.DB_LOGGING || (process.env.NODE_ENV === 'development' ? 'sql' : 'none')
+
+export const sequelize_config = new Sequelize(DB_NAME, DB_USER, DB_PASS, {
+    host: DB_HOST,
+    dialect: DB_DIALECT,
+    logging: DB_LOGGING === 'sql' ? (log)=>console.log('sequelize : ',log) : false
 })
 
 //export const sequelize_config = new Sequelize('mysql://root:1234@localhost/Assignment_six')

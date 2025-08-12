@@ -4,10 +4,10 @@
 export default {
   async up(queryInterface, Sequelize) {
     // 1. Check if column exists (without creating it)
-    const hasColumn = await queryInterface.sequelize.query(
+    const [columns] = await queryInterface.sequelize.query(
       `SHOW COLUMNS FROM Posts LIKE 'fkUserId'`
     );
-    
+
     if (columns.length === 0) {
       throw new Error('Column fkUserId does not exist in Posts table');
     }
