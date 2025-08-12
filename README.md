@@ -79,7 +79,7 @@ DB_DIALECT=mysql
 ```
 
 ## Database & Migrations
-Migrations live in `src/DB/migrations/`. Because this is an ESM project with a non-standard folder layout, prefer explicit CLI flags over implicit discovery.
+Migrations live in `src/DB/migrations/`. 
 
 Examples:
 ```
@@ -143,12 +143,6 @@ All endpoints use `express-validator` and return consistent JSON envelopes.
 - Password hashing via `bcrypt` in model hooks; updates rehash only when changed.
 - Security middleware: `helmet`, `cors`, `express-rate-limit`.
 - Logging via `morgan` (dev-friendly), standard error handling middleware.
-
-## Operational Notes
-- Prefer explicit Sequelize CLI flags to avoid `.sequelizerc` ambiguity in ESM.
-- Keep migrations authoritative; avoid schema drift.
-- Response contract is stable and uniform across modules.
-- Consider moving DB credentials fully to env and using a JS `config.cjs/mjs` for flexibility.
 
 ## Resources
 - Postman collection:
